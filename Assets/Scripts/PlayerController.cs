@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         Jump();
-    transform.rotation = Quaternion.identity;
+        transform.rotation = Quaternion.identity;
     }
 
     private void Move()
@@ -54,9 +54,18 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            m_isGrounded = false;
-        }
+        m_isGrounded = false;
+    }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        var interactiveObj = collision.GetComponent<IInteractable>();
+
+        if (interactiveObj != null) MissionManager.Inst.IsInteractable = true;
+    }
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        var interactiveObj = collision.GetComponent<IInteractable>();
+
+        if (interactiveObj != null) MissionManager.Inst.IsInteractable = false;
     }
 }
