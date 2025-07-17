@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LifeSupportMachine : InteractableObject
 {
-    const float SUM_LIFE_SUPPORT_GAUGE = 4.0f;
+    const float SUM_LIFE_SUPPORT_GAUGE = 25f;
     const float DECREASE_LIFE_SUPPORT_GAUGE = 2.0f;
     const float MAX_LIFE_SUPPORT_GAUGE = 100;
 
@@ -16,7 +16,6 @@ public class LifeSupportMachine : InteractableObject
     void Update()
     {
         DecreaseLifeSupportGauge();
-        Interactive();
     }
 
     public override void Init()
@@ -27,23 +26,17 @@ public class LifeSupportMachine : InteractableObject
 
     public override void Interactive()
     {
-        isInteractContinue = false;
-        if (MissionManager.Inst.LifeSupportGauge >= MAX_LIFE_SUPPORT_GAUGE || !MissionManager.Inst.IsInteractable) return;
-
-        if (Input.GetMouseButton(0) || Input.GetKey(KeyCode.F))
+        if (MissionManager.Inst.IsCarryingOxygen)
         {
-            if (MissionManager.Inst.LifeSupportGauge < MAX_LIFE_SUPPORT_GAUGE)
-            {
-                base.Interactive();
-                MissionManager.Inst.LifeSupportGauge += SUM_LIFE_SUPPORT_GAUGE * Time.deltaTime;
-            }
+            MissionManager.Inst.LifeSupportGauge += SUM_LIFE_SUPPORT_GAUGE;
+            if (MissionManager.Inst.LifeSupportGauge >= 100f) MissionManager.Inst.LifeSupportGauge = MAX_LIFE_SUPPORT_GAUGE;
+            MissionManager.Inst.IsCarryingOxygen = false;
         }
-
     }
 
     void DecreaseLifeSupportGauge()
     {
-        if(!isInteractContinue)
-            MissionManager.Inst.LifeSupportGauge -= DECREASE_LIFE_SUPPORT_GAUGE * Time.deltaTime;
+        if (MissionManager.Inst.LifeSupportGauge <= 0f) return;
+        MissionManager.Inst.LifeSupportGauge -= DECREASE_LIFE_SUPPORT_GAUGE * Time.deltaTime;
     }
 }
