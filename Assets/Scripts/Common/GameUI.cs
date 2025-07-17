@@ -10,7 +10,6 @@ public class GameUI : MonoBehaviour
     }
     void Update()
     {
-
     }
 
     public void Init() // 초기화 함수
