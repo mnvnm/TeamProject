@@ -18,7 +18,7 @@ public class Wire : InteractableObject
     public override void Init()
     {
         base.Init();
-        GameManager.Inst.hud.missionUI.Init();
+        GameManager.Inst.hud.wireUI.Init();
     }
 
     public override void Interactive()
@@ -26,7 +26,7 @@ public class Wire : InteractableObject
         if (IsSuccess) return; // 이미 완료한 와이어는 반환
         base.Interactive();
         MissionManager.Inst.WireingIndex = WireIndex;
-        GameManager.Inst.hud.missionUI.Show(isInteractContinue);
-        GameManager.Inst.hud.missionUI.Init();
+        GameManager.Inst.hud.wireUI.Show(isInteractContinue);
+        GameManager.Inst.hud.wireUI.Init();
     }
 }

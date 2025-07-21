@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MissionUI : MonoBehaviour
+public class WireUI : MonoBehaviour
 {
     public int curWireNum = -1;
     int wireCount = 4;

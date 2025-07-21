@@ -77,10 +77,9 @@ public class PlayerController : MonoBehaviour
         if (m_interactableObj != null && Input.GetKeyUp(KeyCode.F))
         {
             var wire = m_interactableObj.GetComponent<Wire>();
-            {
-                if (wire != null)
-                    if (!wire.IsSuccess) return;
-            }
+            if (wire != null)
+                if (!wire.IsSuccess) return;
+
             m_interactableObj.isInteractContinue = false;
             isInteractive = false;
         }
