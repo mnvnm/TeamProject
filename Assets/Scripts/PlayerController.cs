@@ -32,6 +32,11 @@ public class PlayerController : MonoBehaviour
         WeldingPointIndicatedObjCreate();
     }
 
+    public void SetIsInteractive(bool isInter) // 남발 금지 강제로 바꾸기에 위험
+    {
+        isInteractive = isInter;
+    }
+
     void Update()
     {
         Move();
@@ -46,7 +51,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isInteractive) return;
         float xAxis = Input.GetAxisRaw("Horizontal");
-
+        m_speed = MissionManager.Inst.IsCarryingOxygen ? 8 * 0.8f : 8;
         m_rigid.linearVelocity = new Vector2(xAxis * m_speed, m_rigid.linearVelocity.y);
     }
 
@@ -66,11 +71,15 @@ public class PlayerController : MonoBehaviour
         {
             m_rigid.linearVelocity = new Vector2(0, 0);
             m_interactableObj.isInteractContinue = true;
-            isInteractive = true;
             m_interactableObj.Interactive();
+            isInteractive = true;
         }
         if (m_interactableObj != null && Input.GetKeyUp(KeyCode.F))
         {
+            var wire = m_interactableObj.GetComponent<Wire>();
+            if (wire != null)
+                if (!wire.IsSuccess) return;
+
             m_interactableObj.isInteractContinue = false;
             isInteractive = false;
         }
