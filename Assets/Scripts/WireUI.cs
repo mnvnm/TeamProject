@@ -15,7 +15,7 @@ public class WireUI : MonoBehaviour
     List<int> leftBtnColorNumList = new List<int>();
     List<int> rightBtnColorNumList = new List<int>();
 
-    public List<int> successNums = new List<int>(); // 각 와이어가 연결되었는지 확인하는 변수
+    [HideInInspector] public List<int> successNums = new List<int>(); // 각 와이어가 연결되었는지 확인하는 변수
     //기본적으로 왼쪽을 기준으로 하여 왼쪽과 오른쪽이 이어졌을때 해당 왼쪽 버튼의 인덱스를 1로 하여 완료 되었음을 저장  
     int curPickWireNum = 0; // 선택한 와이어 번호
     int curBtnIndex = 0; // 선택한 버튼 인덱스
