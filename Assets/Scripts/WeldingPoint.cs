@@ -40,12 +40,15 @@ public class WeldingPoint : InteractableObject
 
     IEnumerator Active()
     {
-        float randomTime = Random.Range(15f, 60f);
-        yield return new WaitForSeconds(randomTime);
+        if (activeSelf)
+        {
+            float randomTime = Random.Range(15f, 60f);
+            yield return new WaitForSeconds(randomTime);
+        }
         activeSelf = false;
         while (!activeSelf)
         {
-            yield return new WaitForSeconds(30f);
+            yield return new WaitForSeconds(10f);
         }
     }
 }

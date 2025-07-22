@@ -11,6 +11,12 @@ public class PlayerUI : MonoBehaviour
         
     }
 
+    public void Init()
+    {
+        lifeSupportGaugeBar.value = 1;
+        generatorGaugeBar.value = 1;
+    }
+
     // Update is called once per frame
     void Update()
     {
