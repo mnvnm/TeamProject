@@ -453,7 +453,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c6cef16f55e91f448fb9d5298015417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsInteractable: 0
+  IsCarryingOxygen: 0
+  IsNeedWelding: 0
   LifeSupportGauge: 100
+  MaxLifeSupportGauge: 100
+  GeneratorGauge: 100
+  MaxGeneratorGauge: 100
+  weldingPoints: []
+  wirePoints: []
+  WireingIndex: 10
+  WireAllSuccessNum: 0
 --- !u!1 &598811390
 GameObject:
   m_ObjectHideFlags: 0
@@ -954,6 +964,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25c87fe0104095947bb1d86c23741f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wireUI: {fileID: 0}
+  playerUI: {fileID: 0}
 --- !u!4 &1580249959
 Transform:
   m_ObjectHideFlags: 0
@@ -1107,6 +1119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d14d6e1364202c438813d3dc20b91d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carryingBarrelSpr: {fileID: 0}
+  WeldingPoingIndicatedObjPrefab: {fileID: 0}
 --- !u!212 &1900671278
 SpriteRenderer:
   m_ObjectHideFlags: 0
