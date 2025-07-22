@@ -4,6 +4,7 @@ using UnityEngine;
 public class WeldingPoint : InteractableObject
 {
     [SerializeField] GameObject SuccessObj;
+    [SerializeField] GameObject NeedWeldingObj;
     const float INTERACTIVE_SECOND = 3f;
     float interactiveCurTime = 0;
 
@@ -23,6 +24,7 @@ public class WeldingPoint : InteractableObject
         activeSelf = true;
         StartCoroutine(Active());
         SuccessObj.SetActive(true);
+        NeedWeldingObj.SetActive(false);
     }
 
     public override void Interactive()
@@ -36,19 +38,20 @@ public class WeldingPoint : InteractableObject
             activeSelf = true;
         }
         SuccessObj.SetActive(activeSelf);
+        NeedWeldingObj.SetActive(!activeSelf);
     }
 
     IEnumerator Active()
     {
         if (activeSelf)
         {
-            float randomTime = Random.Range(15f, 60f);
+            float randomTime = Random.Range(100f, 600f);
             yield return new WaitForSeconds(randomTime);
         }
         activeSelf = false;
         while (!activeSelf)
         {
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(120f);
         }
     }
 }

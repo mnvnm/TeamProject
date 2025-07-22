@@ -27,7 +27,7 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
     public float MaxLifeSupportGauge = 100;
     public float GeneratorGauge = 100;
     public float MaxGeneratorGauge = 100;
-    public WeldingPoint[] weldingPoints;
+    public List<WeldingPoint> weldingPoints = new List<WeldingPoint>();
 
     public List<Wire> wirePoints = new List<Wire>();
     public Nonsense nonsense;
@@ -46,10 +46,13 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
         GeneratorGauge = MaxGeneratorGauge;
         IsCarryingOxygen = false;
         IsNeedWelding = false;
-        for (int i = 0; i < wirePoints.Count; i++)
+        if (wirePoints != null)
         {
-            wirePoints[i].WireIndex = i;
-            wirePoints[i].IsSuccess = false;
+            for (int i = 0; i < wirePoints.Count; i++)
+            {
+                wirePoints[i].WireIndex = i;
+                wirePoints[i].IsSuccess = false;
+            }
         }
     }
 
@@ -60,14 +63,17 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
 
     void SetNeedWelding()
     {
-        for (int i = 0; i < weldingPoints.Length; i++)
+        if (weldingPoints != null)
         {
-            if (!weldingPoints[i].activeSelf)
+            for (int i = 0; i < weldingPoints.Count; i++)
             {
-                IsNeedWelding = true;
-                break;
+                if (!weldingPoints[i].activeSelf)
+                {
+                    IsNeedWelding = true;
+                    break;
+                }
+                IsNeedWelding = false;
             }
-            IsNeedWelding = false;
         }
     }
 
@@ -81,11 +87,19 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
         bool isSuccess = count >= 4;
         if (isSuccess)
         {
-            wirePoints[wireIndex].isInteractContinue = false;
-            wirePoints[wireIndex].IsSuccess = isSuccess;
+            if (wirePoints != null && wireIndex < wirePoints.Count && wirePoints[wireIndex] != null)
+            {
+                wirePoints[wireIndex].isInteractContinue = false;
+                wirePoints[wireIndex].IsSuccess = isSuccess;
+            }
             WireAllSuccessNum++;
             GameManager.Inst.game.player.SetIsInteractive(false);
         }
         return isSuccess;
+    }
+
+    public bool GetIsWireAllSuccess()
+    {
+        return WireAllSuccessNum >= wirePoints.Count;
     }
 }
