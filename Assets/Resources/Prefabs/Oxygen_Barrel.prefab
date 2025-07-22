@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5817028672361565242}
   - component: {fileID: 6863591174790453247}
-  - component: {fileID: 88241402542755159}
-  - component: {fileID: 5830056085562796819}
+  - component: {fileID: 6416114433995524938}
+  - component: {fileID: 8268477775627308024}
   m_Layer: 0
   m_Name: Oxygen_Barrel
   m_TagString: Untagged
@@ -89,7 +89,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &88241402542755159
+--- !u!114 &6416114433995524938
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactableDistance: 2
   isInteractContinue: 0
---- !u!58 &5830056085562796819
+--- !u!58 &8268477775627308024
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,5 +137,5 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.6}
+  m_Offset: {x: 0, y: 0}
   m_Radius: 2

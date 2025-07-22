@@ -28,6 +28,12 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
     public float GeneratorGauge = 100;
     public float MaxGeneratorGauge = 100;
     public WeldingPoint[] weldingPoints;
+
+    public List<Wire> wirePoints = new List<Wire>();
+    public Nonsense nonsense;
+    public int WireingIndex = 10;// 현재 진행중인 와이어의 인덱스
+
+    public int WireAllSuccessNum = 0;
     void Start()
     {
         Init();
@@ -35,10 +41,16 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
 
     public void Init() // 초기화
     {
+        WireingIndex = 10;
         LifeSupportGauge = MaxLifeSupportGauge;
         GeneratorGauge = MaxGeneratorGauge;
         IsCarryingOxygen = false;
         IsNeedWelding = false;
+        for (int i = 0; i < wirePoints.Count; i++)
+        {
+            wirePoints[i].WireIndex = i;
+            wirePoints[i].IsSuccess = false;
+        }
     }
 
     void Update()
@@ -57,5 +69,23 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
             }
             IsNeedWelding = false;
         }
+    }
+
+    public bool CheckIndexWireSuccess(int wireIndex, List<int> successCount) // 몇번째 와이어 미션인지 가져올 변수
+    {
+        int count = 0;
+        for (int i = 0; i < successCount.Count; i++)
+        {
+            count += successCount[i];
+        }
+        bool isSuccess = count >= 4;
+        if (isSuccess)
+        {
+            wirePoints[wireIndex].isInteractContinue = false;
+            wirePoints[wireIndex].IsSuccess = isSuccess;
+            WireAllSuccessNum++;
+            GameManager.Inst.game.player.SetIsInteractive(false);
+        }
+        return isSuccess;
     }
 }
