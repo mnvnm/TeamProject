@@ -15,7 +15,7 @@ public class WireUI : MonoBehaviour
     List<int> leftBtnColorNumList = new List<int>();
     List<int> rightBtnColorNumList = new List<int>();
 
-    public List<int> successNums = new List<int>(); // 각 와이어가 연결되었는지 확인하는 변수
+    [HideInInspector] public List<int> successNums = new List<int>(); // 각 와이어가 연결되었는지 확인하는 변수
     //기본적으로 왼쪽을 기준으로 하여 왼쪽과 오른쪽이 이어졌을때 해당 왼쪽 버튼의 인덱스를 1로 하여 완료 되었음을 저장  
     int curPickWireNum = 0; // 선택한 와이어 번호
     int curBtnIndex = 0; // 선택한 버튼 인덱스
@@ -29,7 +29,6 @@ public class WireUI : MonoBehaviour
     void Update()
     {
         if (!GetIsShow()) return;
-        Debug.Log("Update 함수 들어왔으며, successNums 는 : " + successNums);
         // 마우스 포인터를 따라오는 라인 렌더러
         for (int i = 0; i < wireLineRenderer.Count; i++)
         {
@@ -147,7 +146,6 @@ public class WireUI : MonoBehaviour
     {
         if (successNums[index] == 1)
         {
-            Debug.Log("이미 완료된 와이어를 클릭 중입니다.");
             return;
         }
         curPickWireNum = leftBtnColorNumList[index];
@@ -157,7 +155,6 @@ public class WireUI : MonoBehaviour
         }
         wireLineRenderer[index].enabled = true; // 현재 새로 선택한 와이어 라인렌더러 활성화
         curBtnIndex = index;
-        Debug.Log("클릭한 와이어의 번호는 " + curBtnIndex + " 입니다.");
     }
 
     public void OnClickMatchWire(int index)
