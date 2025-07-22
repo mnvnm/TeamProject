@@ -30,6 +30,7 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
     public WeldingPoint[] weldingPoints;
 
     public List<Wire> wirePoints = new List<Wire>();
+    public Nonsense nonsense;
     public int WireingIndex = 10;// 현재 진행중인 와이어의 인덱스
 
     public int WireAllSuccessNum = 0;
