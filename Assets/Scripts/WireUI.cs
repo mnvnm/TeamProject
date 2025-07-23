@@ -165,8 +165,7 @@ public class WireUI : MonoBehaviour
             successNums[curBtnIndex] = 1;
             wireLineRenderer[curBtnIndex].SetPosition(1, rightBtns[index].transform.position);
             curBtnIndex = 10;
-
-            Show(!MissionManager.Inst.CheckIndexWireSuccess(curWireNum, successNums));
+            
             if (MissionManager.Inst.CheckIndexWireSuccess(curWireNum, successNums)) curWireNum = 10;
         }
         else

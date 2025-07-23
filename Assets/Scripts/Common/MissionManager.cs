@@ -27,6 +27,8 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
     public float MaxLifeSupportGauge = 100;
     public float GeneratorGauge = 100;
     public float MaxGeneratorGauge = 100;
+    public List<Generator> generator = new List<Generator>();
+    public LifeSupportMachine lifeSupportMachine;
     public List<WeldingPoint> weldingPoints = new List<WeldingPoint>();
 
     public List<Wire> wirePoints = new List<Wire>();
@@ -41,17 +43,34 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
 
     public void Init() // 초기화
     {
-        WireingIndex = 10;
+        lifeSupportMachine.Init();
+        if (generator != null)
+        {
+            for (int i = 0; i < generator.Count; i++)
+            {
+                generator[i].Init();
+            }
+        }
         LifeSupportGauge = MaxLifeSupportGauge;
         GeneratorGauge = MaxGeneratorGauge;
         IsCarryingOxygen = false;
         IsNeedWelding = false;
+        WireingIndex = 10;
         if (wirePoints != null)
         {
             for (int i = 0; i < wirePoints.Count; i++)
             {
                 wirePoints[i].WireIndex = i;
                 wirePoints[i].IsSuccess = false;
+                wirePoints[i].Init();
+            }
+        }
+        nonsense.Init();
+        if (weldingPoints != null)
+        {
+            for (int i = 0; i < weldingPoints.Count; i++)
+            {
+                weldingPoints[i].Init();
             }
         }
     }
@@ -95,6 +114,8 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
             }
             WireAllSuccessNum++;
             GameManager.Inst.game.player.SetIsInteractive(false);
+            if (GetIsWireAllSuccess()) nonsense.ShowInteractableObj();
+            GameManager.Inst.hud.wireUI.Show(!isSuccess);
         }
         return isSuccess;
     }

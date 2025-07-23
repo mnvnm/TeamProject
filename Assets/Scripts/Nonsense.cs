@@ -10,6 +10,7 @@ public class Nonsense : InteractableObject
     public List<string> nonsenseAnswer = new List<string>();
     void Start()
     {
+
     }
 
     // Update is called once per frame
@@ -25,6 +26,8 @@ public class Nonsense : InteractableObject
     public override void Init()
     {
         base.Init();
+        IsSuccess = false;
+        SuccessObj.SetActive(false);
         GameManager.Inst.hud.nonsenseUI.Init();
     }
 
@@ -44,5 +47,10 @@ public class Nonsense : InteractableObject
         IsSuccess = true;
         isInteractContinue = false;
         SuccessObj.SetActive(false);
+    }
+
+    public void ShowInteractableObj()
+    {
+        SuccessObj.SetActive(true);
     }
 }

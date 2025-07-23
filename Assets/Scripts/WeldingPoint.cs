@@ -11,7 +11,7 @@ public class WeldingPoint : InteractableObject
     public bool activeSelf = false; // 평상시에는 비활성화 되어있다가 랜덤한 시간에 활성화를 위한 논리변수
     void Start()
     {
-        Init();
+        
     }
 
     void Update()

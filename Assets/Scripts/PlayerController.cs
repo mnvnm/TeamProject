@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
             var wire = m_interactableObj.GetComponent<Wire>();
             if (wire != null && !wire.IsSuccess) return;
             var nonsense = m_interactableObj.GetComponent<Nonsense>();
-            if (nonsense != null && !nonsense.IsSuccess && !MissionManager.Inst.GetIsWireAllSuccess()) return;
+            if (nonsense != null && (!nonsense.IsSuccess || !MissionManager.Inst.GetIsWireAllSuccess())) return;
             m_interactableObj.isInteractContinue = false;
             isInteractive = false;
         }
