@@ -40,15 +40,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            CameraShake();
-        }
+
     }
 
     public void CameraShake()
     {
         var shake = mainCamera.GetComponent<SmoothShake>();
-        shake.StartShake();
+        if(shake != null) shake.StartShake();
     }
 }

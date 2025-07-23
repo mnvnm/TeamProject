@@ -4214,6 +4214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   game: {fileID: 1683900604}
   hud: {fileID: 527483495}
+  mainCamera: {fileID: 1251592556}
 --- !u!1001 &360119251
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14199,7 +14200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeSettings:
     fadeValue: 0
-    enableOnStart: 0
+    enableOnStart: 1
     constantShake: 0
     fadeInDuration: 0
     fadeInCurve:
@@ -14237,11 +14238,11 @@ MonoBehaviour:
   preset: {fileID: 11400000, guid: d8a457f7dad96bb4aa3ede48b0e3fa98, type: 2}
   positionShake:
     noiseType: 1
-    amplitude: {x: 0.2, y: 0.2, z: 0.2}
-    frequency: {x: 0, y: 0, z: 0}
+    amplitude: {x: 3, y: 3, z: 3}
+    frequency: {x: 0, y: 0.4, z: 0.4}
   rotationShake:
-    noiseType: 0
-    amplitude: {x: 0, y: 0, z: 0}
+    noiseType: 1
+    amplitude: {x: 0.3, y: 0.3, z: 0.3}
     frequency: {x: 0, y: 0, z: 0}
 --- !u!1001 &1263091912
 PrefabInstance:

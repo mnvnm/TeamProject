@@ -53,6 +53,7 @@ public class WeldingPoint : InteractableObject
             yield return new WaitForSeconds(randomTime);
         }
         activeSelf = false;
+        GameManager.Inst.CameraShake();
         yield return null;
     }
 }
