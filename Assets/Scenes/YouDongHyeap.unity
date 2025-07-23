@@ -22343,6 +22343,7 @@ MonoBehaviour:
   nonsenseUI: {fileID: 175184739}
   wireUI: {fileID: 1416363774}
   playerUI: {fileID: 412821158}
+  missionUI: {fileID: 0}
 --- !u!4 &1215709500 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5817028672361565242, guid: e66ae2404561034498d2f99a87a8e1a2, type: 3}

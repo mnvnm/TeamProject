@@ -38,13 +38,13 @@ public class MissionUI : MonoBehaviour
         {
             mainMissionText.text = string.Format("- 통신기 수리를 완료 하여 구조선을 부르세요!");
         }
-        if (MissionManager.Inst.nonsense.IsSuccess)
-        {
-            mainMissionText.text = string.Format("- 구조선이 올 때까지 생존하세요!");
-        }
         else
         {
             mainMissionText.text = string.Format("- 통신기 수리를 위해 배선 수리를 완료하세요! {0} / 4", MissionManager.Inst.WireAllSuccessNum);
+        }
+        if (MissionManager.Inst.nonsense.IsSuccess)
+        {
+            mainMissionText.text = string.Format("- 구조선이 올 때까지 생존하세요!");
         }
 
         if (MissionManager.Inst.LifeSupportGauge > 50.0f)

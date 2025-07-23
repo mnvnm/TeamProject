@@ -25,13 +25,6 @@ public class ImageChanger : MonoBehaviour
         {
             StartCoroutine(FadeOutAndLoadScene("GameScene")); // ✅ 수정된 부분
         }
-        else 
-        {
-                    SceneManager.LoadScene("MainMenu");
-
-        }
-
-
     }
 
     IEnumerator FadeTransition()
