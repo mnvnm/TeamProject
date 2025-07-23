@@ -1,3 +1,4 @@
+using SmoothShakeFree;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -20,6 +21,8 @@ public class GameManager : MonoBehaviour
 
     public GameUI game;
     public HudUI hud;
+
+    public Camera mainCamera;
     void Start()
     {
         Init();
@@ -37,6 +40,15 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            CameraShake();
+        }
+    }
 
+    public void CameraShake()
+    {
+        var shake = mainCamera.GetComponent<SmoothShake>();
+        shake.StartShake();
     }
 }
