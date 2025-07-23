@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
             var wire = m_interactableObj.GetComponent<Wire>();
             if (wire != null && wire.IsSuccess) return;
             var nonsense = m_interactableObj.GetComponent<Nonsense>();
-            if (nonsense != null && nonsense.IsSuccess) return;
+            if (nonsense != null && (nonsense.IsSuccess || !MissionManager.Inst.GetIsWireAllSuccess())) return;
             var lifeSupportMachine = m_interactableObj.GetComponent<LifeSupportMachine>();
             if (lifeSupportMachine != null && !MissionManager.Inst.IsCarryingOxygen) return;
             var oxygen = m_interactableObj.GetComponent<Oxygen>();
@@ -145,15 +145,15 @@ public class PlayerController : MonoBehaviour
 
         if (m_interactableObj != null)
         {
-            var wire = m_interactableObj.GetComponent<Wire>();
+            var wire = m_interactableObj.GetComponent<Wire>(); // 와이어
             if (wire != null && wire.IsSuccess) return;
-            var nonsense = m_interactableObj.GetComponent<Nonsense>();
-            if (nonsense != null && nonsense.IsSuccess) return;
-            var lifeSupportMachine = m_interactableObj.GetComponent<LifeSupportMachine>();
+            var nonsense = m_interactableObj.GetComponent<Nonsense>(); // 넌센스
+            if (nonsense != null && (nonsense.IsSuccess || !MissionManager.Inst.GetIsWireAllSuccess())) return;
+            var lifeSupportMachine = m_interactableObj.GetComponent<LifeSupportMachine>(); // 생명유지장치
             if (lifeSupportMachine != null && !MissionManager.Inst.IsCarryingOxygen) return;
-            var oxygen = m_interactableObj.GetComponent<Oxygen>();
+            var oxygen = m_interactableObj.GetComponent<Oxygen>();// 산소
             if (oxygen != null && MissionManager.Inst.IsCarryingOxygen) return;
-            var weldingPoint = m_interactableObj.GetComponent<WeldingPoint>();
+            var weldingPoint = m_interactableObj.GetComponent<WeldingPoint>();// 용접 포인트
             if (weldingPoint != null && weldingPoint.activeSelf) return;
             InteractText.gameObject.SetActive(true);
             MissionManager.Inst.IsInteractable = true;

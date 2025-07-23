@@ -45,7 +45,7 @@ public class WeldingPoint : InteractableObject
     {
         if (activeSelf)
         {
-            float randomTime = Random.Range(100f, 600f);
+            float randomTime = Random.Range(60f, 400f);
             yield return new WaitForSeconds(randomTime);
         }
         activeSelf = false;

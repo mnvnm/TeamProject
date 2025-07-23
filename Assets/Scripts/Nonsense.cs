@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Nonsense : InteractableObject
 {
+    [SerializeField] GameObject SuccessObj;
     public bool IsSuccess = false;
     public List<string> nonsenseProblem = new List<string>();
 
@@ -37,5 +38,11 @@ public class Nonsense : InteractableObject
     public bool CheckAnswer(string inputText, int problemIndex)
     {
         return inputText == nonsenseAnswer[problemIndex];
+    }
+    public void Success()
+    {
+        IsSuccess = true;
+        isInteractContinue = false;
+        SuccessObj.SetActive(false);
     }
 }

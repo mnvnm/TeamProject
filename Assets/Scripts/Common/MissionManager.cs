@@ -91,6 +91,7 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
             {
                 wirePoints[wireIndex].isInteractContinue = false;
                 wirePoints[wireIndex].IsSuccess = isSuccess;
+                wirePoints[wireIndex].InvisibleSuccessObj();
             }
             WireAllSuccessNum++;
             GameManager.Inst.game.player.SetIsInteractive(false);

@@ -37,6 +37,6 @@ public class LifeSupportMachine : InteractableObject
     void DecreaseLifeSupportGauge()
     {
         if (MissionManager.Inst.LifeSupportGauge <= 0f) return;
-        MissionManager.Inst.LifeSupportGauge -= DECREASE_LIFE_SUPPORT_GAUGE * Time.deltaTime;
+        MissionManager.Inst.LifeSupportGauge -= DECREASE_LIFE_SUPPORT_GAUGE * Time.deltaTime * (MissionManager.Inst.IsNeedWelding ? 2 : 1);
     }
 }

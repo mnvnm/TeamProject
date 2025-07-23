@@ -58,6 +58,7 @@ public class NonsenseUI : MonoBehaviour
                 Show(false);
                 MissionManager.Inst.nonsense.IsSuccess = true;
                 MissionManager.Inst.nonsense.isInteractContinue = false;
+                MissionManager.Inst.nonsense.Success();
                 GameManager.Inst.game.player.SetIsInteractive(false);
             }
         }

@@ -104,6 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactableDistance: 2
   isInteractContinue: 0
+  SuccessObj: {fileID: 6095211032772220239}
   WireIndex: 0
   IsSuccess: 0
 --- !u!58 &7995675348279321536
