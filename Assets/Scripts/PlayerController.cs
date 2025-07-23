@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,6 @@ public class PlayerController : MonoBehaviour
     private float m_speed = 8;
     private float m_jumpForce = 800;
 
-    private bool m_isGrounded = true;
 
     [SerializeField] SpriteRenderer carryingBarrelSpr;
     private Rigidbody2D m_rigid;
@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] TextMeshProUGUI InteractText; // 용접 해야할 장소를 가리키는 오브젝트 프리팹
     private List<GameObject> WeldingPointIndicatedObjs = new List<GameObject>(); // 용접 해야할 장소를 가리키는 오브젝트
     private Animator m_animator;
+    private SpriteRenderer m_spriter;
 
     bool isInteractive = false;
 
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
     {
         m_rigid = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
+        m_spriter = GetComponent<SpriteRenderer>();
         m_interactableObj = null;
     }
 
@@ -50,11 +52,18 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Move();
+        if (Input.GetButtonDown("Horizontal"))
+        {
+            m_spriter.flipX = Input.GetAxisRaw("Horizontal") == -1;
+        }
+
         Jump();
         Interactive();
         transform.rotation = Quaternion.identity;
         carryingBarrelSpr.enabled = MissionManager.Inst.IsCarryingOxygen;
         ShowIndicatedObjs();
+
+        UpdateAnimationStates(groundCheck.GetIsGround());
     }
 
     private void Move()
@@ -79,7 +88,6 @@ public class PlayerController : MonoBehaviour
         }
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && groundCheck.GetIsGround())
         {
-            m_animator.SetBool("Jump", groundCheck.GetIsGround());
             m_rigid.linearVelocity = new Vector2(m_rigid.linearVelocity.x, 0);
             m_rigid.AddForce(gameObject.transform.up * m_jumpForce);
         }
@@ -188,5 +196,16 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         yield return null;
+    }
+
+    public void UpdateAnimationStates(bool isGround)
+    {
+        float vy = m_rigid.linearVelocity.y;
+
+        m_animator.SetFloat("verticalSpeed", vy);
+        m_animator.SetBool("isGround", isGround);
+
+        bool walking = Mathf.Abs(m_rigid.linearVelocity.x) > 0.05f && isGround;
+        m_animator.SetBool("isWalking", walking);
     }
 }
