@@ -8,7 +8,7 @@ public class WeldingPoint : InteractableObject
     const float INTERACTIVE_SECOND = 3f;
     float interactiveCurTime = 0;
 
-    public bool activeSelf = false; // 평상시에는 비활성화 되어있다가 랜덤한 시간에 활성화를 위한 논리변수
+    public bool activeSelf = true; // 평상시에는 비활성화 되어있다가 랜덤한 시간에 활성화를 위한 논리변수
     void Start()
     {
         
