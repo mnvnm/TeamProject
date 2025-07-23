@@ -208,4 +208,9 @@ public class PlayerController : MonoBehaviour
         bool walking = Mathf.Abs(m_rigid.linearVelocity.x) > 0.05f && isGround;
         m_animator.SetBool("isWalking", walking);
     }
+
+    public void StunAnimation(bool isStun)
+    {
+        m_animator.SetBool("isStunned", isStun);
+    }
 }
