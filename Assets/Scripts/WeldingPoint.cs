@@ -35,7 +35,10 @@ public class WeldingPoint : InteractableObject
 
         if (interactiveCurTime >= INTERACTIVE_SECOND && isInteractContinue)
         {
+            StopCoroutine(Active());
             activeSelf = true;
+            isInteractContinue = false;
+            StartCoroutine(Active());
         }
         SuccessObj.SetActive(activeSelf);
         NeedWeldingObj.SetActive(!activeSelf);
@@ -43,15 +46,13 @@ public class WeldingPoint : InteractableObject
 
     IEnumerator Active()
     {
+        float randomTime = 30f;
         if (activeSelf)
         {
-            float randomTime = Random.Range(10f, 30f);
+            randomTime = Random.Range(30f, 500f);
             yield return new WaitForSeconds(randomTime);
         }
         activeSelf = false;
-        while (!activeSelf)
-        {
-            yield return new WaitForSeconds(120f);
-        }
+        yield return null;
     }
 }

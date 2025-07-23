@@ -30,7 +30,6 @@ public class PlayerUI : MonoBehaviour
 
         if (MissionManager.Inst.IsNeedWelding)
         {
-            Debug.Log("용접이 필요하며, 위험 이미지 투명도 값은 : " + alpha);
             if (alpha >= 0.2f || alpha <= 0f)
             {
                 if (alpha > 0.2f) alpha = 0.2f;
@@ -38,6 +37,11 @@ public class PlayerUI : MonoBehaviour
                 reserve = !reserve;
             }
             alpha += Time.deltaTime * (reserve ? -1 : 1) * 0.25f;
+            dangerImg.color = new Color(dangerImg.color.r, dangerImg.color.g, dangerImg.color.b, alpha);
+        }
+        else if(alpha > 0 && !MissionManager.Inst.IsNeedWelding)
+        {
+            alpha -= Time.deltaTime * 0.25f;
             dangerImg.color = new Color(dangerImg.color.r, dangerImg.color.g, dangerImg.color.b, alpha);
         }
     }
