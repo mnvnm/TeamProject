@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class LifeSupportMachine : InteractableObject
 {
-    const float SUM_LIFE_SUPPORT_GAUGE = 25f;
-    const float DECREASE_LIFE_SUPPORT_GAUGE = 2.0f;
+    const float SUM_LIFE_SUPPORT_GAUGE = 40f;
+    const float DECREASE_LIFE_SUPPORT_GAUGE = 0.6f;
     const float MAX_LIFE_SUPPORT_GAUGE = 100;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -37,6 +37,6 @@ public class LifeSupportMachine : InteractableObject
     void DecreaseLifeSupportGauge()
     {
         if (MissionManager.Inst.LifeSupportGauge <= 0f) return;
-        MissionManager.Inst.LifeSupportGauge -= DECREASE_LIFE_SUPPORT_GAUGE * Time.deltaTime;
+        MissionManager.Inst.LifeSupportGauge -= DECREASE_LIFE_SUPPORT_GAUGE * Time.deltaTime * (MissionManager.Inst.IsNeedWelding ? 2 : 1);
     }
 }

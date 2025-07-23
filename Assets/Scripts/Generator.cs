@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Generator : InteractableObject
 {
-    const float SUM_GENERATOR_GAUGE = 6.0f;
-    const float DECREASE_GENERATOR_GAUGE = 1.5f;
+    const float SUM_GENERATOR_GAUGE = 10.0f;
+    const float DECREASE_GENERATOR_GAUGE = 0.5f;
     const float MAX_GENERATOR_GAUGE = 100;
     void Start()
     {

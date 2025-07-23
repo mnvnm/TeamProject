@@ -3,12 +3,14 @@ using UnityEngine;
 
 public class Nonsense : InteractableObject
 {
+    [SerializeField] GameObject SuccessObj;
     public bool IsSuccess = false;
     public List<string> nonsenseProblem = new List<string>();
 
     public List<string> nonsenseAnswer = new List<string>();
     void Start()
     {
+
     }
 
     // Update is called once per frame
@@ -24,6 +26,8 @@ public class Nonsense : InteractableObject
     public override void Init()
     {
         base.Init();
+        IsSuccess = false;
+        SuccessObj.SetActive(false);
         GameManager.Inst.hud.nonsenseUI.Init();
     }
 
@@ -37,5 +41,16 @@ public class Nonsense : InteractableObject
     public bool CheckAnswer(string inputText, int problemIndex)
     {
         return inputText == nonsenseAnswer[problemIndex];
+    }
+    public void Success()
+    {
+        IsSuccess = true;
+        isInteractContinue = false;
+        SuccessObj.SetActive(false);
+    }
+
+    public void ShowInteractableObj()
+    {
+        SuccessObj.SetActive(true);
     }
 }

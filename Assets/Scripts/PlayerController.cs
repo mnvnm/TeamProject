@@ -7,8 +7,9 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] GroundCheck groundCheck;
     private float m_speed = 8;
-    private float m_jumpForce = 380;
+    private float m_jumpForce = 800;
 
     private bool m_isGrounded = true;
 
@@ -17,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private InteractableObject m_interactableObj;
     [SerializeField] GameObject WeldingPoingIndicatedObjPrefab; // 용접 해야할 장소를 가리키는 오브젝트 프리팹
     [SerializeField] TextMeshProUGUI InteractText; // 용접 해야할 장소를 가리키는 오브젝트 프리팹
-    private List<GameObject> WeldingPoingIndicatedObjs = new List<GameObject>(); // 용접 해야할 장소를 가리키는 오브젝트
+    private List<GameObject> WeldingPointIndicatedObjs = new List<GameObject>(); // 용접 해야할 장소를 가리키는 오브젝트
     private Animator m_animator;
 
     bool isInteractive = false;
@@ -41,6 +42,11 @@ public class PlayerController : MonoBehaviour
         isInteractive = isInter;
     }
 
+    public bool GetIsInteractive()
+    {
+        return isInteractive;
+    }
+
     void Update()
     {
         Move();
@@ -53,17 +59,27 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        if (isInteractive) return;
+        if (isInteractive)
+        {
+            m_rigid.linearVelocity = new Vector2(0, 0);
+            return;
+        }
         float xAxis = Input.GetAxisRaw("Horizontal");
-        m_speed = MissionManager.Inst.IsCarryingOxygen ? 8 * 0.8f : 8;
+        m_speed = MissionManager.Inst.IsCarryingOxygen ? 8 * 0.6f : 8;
         m_rigid.linearVelocity = new Vector2(xAxis * m_speed, m_rigid.linearVelocity.y);
+        m_rigid.linearVelocity = new Vector2(Mathf.Clamp(m_rigid.linearVelocity.x, -m_speed, m_speed), Mathf.Clamp(m_rigid.linearVelocity.y, -16, m_speed));
     }
 
     private void Jump()
     {
-        if (isInteractive) return;
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && m_isGrounded)
+        if (isInteractive)
         {
+            m_rigid.linearVelocity = new Vector2(0, 0);
+            return;
+        }
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && groundCheck.GetIsGround())
+        {
+            m_animator.SetBool("Jump", groundCheck.GetIsGround());
             m_rigid.linearVelocity = new Vector2(m_rigid.linearVelocity.x, 0);
             m_rigid.AddForce(gameObject.transform.up * m_jumpForce);
         }
@@ -76,7 +92,7 @@ public class PlayerController : MonoBehaviour
             var wire = m_interactableObj.GetComponent<Wire>();
             if (wire != null && wire.IsSuccess) return;
             var nonsense = m_interactableObj.GetComponent<Nonsense>();
-            if (nonsense != null && nonsense.IsSuccess) return;
+            if (nonsense != null && (nonsense.IsSuccess || !MissionManager.Inst.GetIsWireAllSuccess())) return;
             var lifeSupportMachine = m_interactableObj.GetComponent<LifeSupportMachine>();
             if (lifeSupportMachine != null && !MissionManager.Inst.IsCarryingOxygen) return;
             var oxygen = m_interactableObj.GetComponent<Oxygen>();
@@ -93,7 +109,7 @@ public class PlayerController : MonoBehaviour
             var wire = m_interactableObj.GetComponent<Wire>();
             if (wire != null && !wire.IsSuccess) return;
             var nonsense = m_interactableObj.GetComponent<Nonsense>();
-            if (nonsense != null && !nonsense.IsSuccess) return;
+            if (nonsense != null && (!nonsense.IsSuccess || !MissionManager.Inst.GetIsWireAllSuccess())) return;
             m_interactableObj.isInteractContinue = false;
             isInteractive = false;
         }
@@ -101,53 +117,43 @@ public class PlayerController : MonoBehaviour
 
     void WeldingPointIndicatedObjCreate()
     {
-        for (int i = 0; i < MissionManager.Inst.weldingPoints.Length; i++)
+        for (int i = 0; i < MissionManager.Inst.weldingPoints.Count; i++)
         {
             var obj = Instantiate(WeldingPoingIndicatedObjPrefab, transform);
-            WeldingPoingIndicatedObjs.Add(obj);
+            WeldingPointIndicatedObjs.Add(obj);
         }
     }
 
     void ShowIndicatedObjs()
     {
-        if (WeldingPoingIndicatedObjs.Count == 0 || WeldingPoingIndicatedObjs == null) return;
-        for (int i = 0; i < MissionManager.Inst.weldingPoints.Length; i++)
+        if (MissionManager.Inst.weldingPoints != null && WeldingPointIndicatedObjs != null)
         {
-            WeldingPoingIndicatedObjs[i].SetActive(!MissionManager.Inst.weldingPoints[i].activeSelf);
-            if (MissionManager.Inst.weldingPoints[i].activeSelf) continue;
-            Vector3 direction = MissionManager.Inst.weldingPoints[i].transform.position - WeldingPoingIndicatedObjs[i].transform.position;
-            WeldingPoingIndicatedObjs[i].transform.up = direction;
-            WeldingPoingIndicatedObjs[i].transform.localPosition = WeldingPoingIndicatedObjs[i].transform.up * 1f;
+            for (int i = 0; i < WeldingPointIndicatedObjs.Count; i++)
+            {
+                WeldingPointIndicatedObjs[i].SetActive(!MissionManager.Inst.weldingPoints[i].activeSelf);
+                if (MissionManager.Inst.weldingPoints[i].activeSelf) continue;
+                Vector3 direction = MissionManager.Inst.weldingPoints[i].transform.position - WeldingPointIndicatedObjs[i].transform.position;
+                WeldingPointIndicatedObjs[i].transform.up = direction;
+                WeldingPointIndicatedObjs[i].transform.localPosition = WeldingPointIndicatedObjs[i].transform.up * 1f;
+            }
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.contacts[0].normal.y > 0.7f || collision.gameObject.CompareTag("Ground"))
-        {
-            m_isGrounded = true;
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        m_isGrounded = false;
-    }
     void OnTriggerEnter2D(Collider2D collision)
     {
         m_interactableObj = collision.GetComponent<InteractableObject>();
 
         if (m_interactableObj != null)
         {
-            var wire = m_interactableObj.GetComponent<Wire>();
+            var wire = m_interactableObj.GetComponent<Wire>(); // 와이어
             if (wire != null && wire.IsSuccess) return;
-            var nonsense = m_interactableObj.GetComponent<Nonsense>();
-            if (nonsense != null && nonsense.IsSuccess) return;
-            var lifeSupportMachine = m_interactableObj.GetComponent<LifeSupportMachine>();
+            var nonsense = m_interactableObj.GetComponent<Nonsense>(); // 넌센스
+            if (nonsense != null && (nonsense.IsSuccess || !MissionManager.Inst.GetIsWireAllSuccess())) return;
+            var lifeSupportMachine = m_interactableObj.GetComponent<LifeSupportMachine>(); // 생명유지장치
             if (lifeSupportMachine != null && !MissionManager.Inst.IsCarryingOxygen) return;
-            var oxygen = m_interactableObj.GetComponent<Oxygen>();
+            var oxygen = m_interactableObj.GetComponent<Oxygen>();// 산소
             if (oxygen != null && MissionManager.Inst.IsCarryingOxygen) return;
-            var weldingPoint = m_interactableObj.GetComponent<WeldingPoint>();
+            var weldingPoint = m_interactableObj.GetComponent<WeldingPoint>();// 용접 포인트
             if (weldingPoint != null && weldingPoint.activeSelf) return;
             InteractText.gameObject.SetActive(true);
             MissionManager.Inst.IsInteractable = true;

@@ -27,7 +27,9 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
     public float MaxLifeSupportGauge = 100;
     public float GeneratorGauge = 100;
     public float MaxGeneratorGauge = 100;
-    public WeldingPoint[] weldingPoints;
+    public List<Generator> generator = new List<Generator>();
+    public LifeSupportMachine lifeSupportMachine;
+    public List<WeldingPoint> weldingPoints = new List<WeldingPoint>();
 
     public List<Wire> wirePoints = new List<Wire>();
     public Nonsense nonsense;
@@ -41,15 +43,35 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
 
     public void Init() // 초기화
     {
-        WireingIndex = 10;
+        lifeSupportMachine.Init();
+        if (generator != null)
+        {
+            for (int i = 0; i < generator.Count; i++)
+            {
+                generator[i].Init();
+            }
+        }
         LifeSupportGauge = MaxLifeSupportGauge;
         GeneratorGauge = MaxGeneratorGauge;
         IsCarryingOxygen = false;
         IsNeedWelding = false;
-        for (int i = 0; i < wirePoints.Count; i++)
+        WireingIndex = 10;
+        if (wirePoints != null)
         {
-            wirePoints[i].WireIndex = i;
-            wirePoints[i].IsSuccess = false;
+            for (int i = 0; i < wirePoints.Count; i++)
+            {
+                wirePoints[i].WireIndex = i;
+                wirePoints[i].IsSuccess = false;
+                wirePoints[i].Init();
+            }
+        }
+        nonsense.Init();
+        if (weldingPoints != null)
+        {
+            for (int i = 0; i < weldingPoints.Count; i++)
+            {
+                weldingPoints[i].Init();
+            }
         }
     }
 
@@ -60,14 +82,17 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
 
     void SetNeedWelding()
     {
-        for (int i = 0; i < weldingPoints.Length; i++)
+        if (weldingPoints != null)
         {
-            if (!weldingPoints[i].activeSelf)
+            for (int i = 0; i < weldingPoints.Count; i++)
             {
-                IsNeedWelding = true;
-                break;
+                if (!weldingPoints[i].activeSelf)
+                {
+                    IsNeedWelding = true;
+                    break;
+                }
+                IsNeedWelding = false;
             }
-            IsNeedWelding = false;
         }
     }
 
@@ -81,11 +106,22 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
         bool isSuccess = count >= 4;
         if (isSuccess)
         {
-            wirePoints[wireIndex].isInteractContinue = false;
-            wirePoints[wireIndex].IsSuccess = isSuccess;
+            if (wirePoints != null && wireIndex < wirePoints.Count && wirePoints[wireIndex] != null)
+            {
+                wirePoints[wireIndex].isInteractContinue = false;
+                wirePoints[wireIndex].IsSuccess = isSuccess;
+                wirePoints[wireIndex].InvisibleSuccessObj();
+            }
             WireAllSuccessNum++;
             GameManager.Inst.game.player.SetIsInteractive(false);
+            if (GetIsWireAllSuccess()) nonsense.ShowInteractableObj();
+            GameManager.Inst.hud.wireUI.Show(!isSuccess);
         }
         return isSuccess;
+    }
+
+    public bool GetIsWireAllSuccess()
+    {
+        return WireAllSuccessNum >= wirePoints.Count;
     }
 }
