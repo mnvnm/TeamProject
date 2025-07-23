@@ -6,6 +6,7 @@ public class HudUI : MonoBehaviour
     public NonsenseUI nonsenseUI;
     public WireUI wireUI;
     public PlayerUI playerUI;
+    public MissionUI missionUI;
     void Start()
     {
 
@@ -22,5 +23,6 @@ public class HudUI : MonoBehaviour
         wireUI.Init();
         nonsenseUI.Show(false);
         nonsenseUI.Init();
+        missionUI.Init();
     }
 }
