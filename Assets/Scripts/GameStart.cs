@@ -16,6 +16,6 @@ public class GameStarter : MonoBehaviour
     void OnStartGame()
     {
         // "GameScene"은 시작할 씬의 이름입니다. 필요에 따라 변경하세요.
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("TestJhin");
     }
 }
