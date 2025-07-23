@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ImageChanger : MonoBehaviour
 {
@@ -25,5 +26,12 @@ public class ImageChanger : MonoBehaviour
         {
             curImg.sprite = images[curImgCount];
         }
+        else 
+        {
+                    SceneManager.LoadScene("MainMenu");
+
+        }
+
+
     }
 }
