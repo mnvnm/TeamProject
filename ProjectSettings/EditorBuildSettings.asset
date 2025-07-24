@@ -5,15 +5,21 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: b815c55176499434abce151dfd887e14
+  - enabled: 1
+    path: Assets/Scenes/TestJhin.unity
+    guid: add33158b36fbb0449599543cd0723a8
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: f3a37c32525519248b688aa3f75fc3fc
   - enabled: 1
-    path: Assets/Scenes/TestJhin.unity
-    guid: add33158b36fbb0449599543cd0723a8
+    path: Assets/Scenes/EscMenu.unity
+    guid: 6f00d6cd0e3bc4b448872cdfa27153c6
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
