@@ -9,6 +9,8 @@ public class ImageChanger : MonoBehaviour
     [SerializeField] List<Sprite> images = new List<Sprite>();
     [SerializeField] Image curImg;
     [SerializeField] Image fadePanel; // 검정 패널 UI 연결
+    [SerializeField] private string NextScene = "GameScene";
+
 
     int curImgCount = 0;
     bool isTransitioning = false;
@@ -23,7 +25,7 @@ public class ImageChanger : MonoBehaviour
         }
         else
         {
-            StartCoroutine(FadeOutAndLoadScene("GameScene")); // ✅ 수정된 부분
+            StartCoroutine(FadeOutAndLoadScene(NextScene)); // ✅ 수정된 부분
         }
     }
 
