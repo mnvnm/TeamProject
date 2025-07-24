@@ -127,6 +127,7 @@ public class PlayerController : MonoBehaviour
             var nonsense = m_interactableObj.GetComponent<Nonsense>();
             if (nonsense != null && (!nonsense.IsSuccess || !MissionManager.Inst.GetIsWireAllSuccess())) return;
             m_interactableObj.isInteractContinue = false;
+            HideInteractSlider();
             isInteractive = false;
         }
     }

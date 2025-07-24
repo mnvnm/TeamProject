@@ -100,6 +100,21 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
 
     void Cheat()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            for (int i = 0; i < wirePoints.Count; i++)
+            {
+                if (wirePoints != null && wirePoints[i] != null)
+                {
+                    wirePoints[i].isInteractContinue = false;
+                    wirePoints[i].IsSuccess = true;
+                    wirePoints[i].InvisibleSuccessObj();
+                    GameManager.Inst.game.player.SetIsInteractive(false);
+                    if (GetIsWireAllSuccess()) nonsense.ShowInteractableObj();
+                }
+                WireAllSuccessNum = wirePoints.Count;
+            }
+        }
         if (Input.GetKey(KeyCode.Alpha0))
         {
             if (LifeSupportGauge > 0)
