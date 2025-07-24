@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D m_rigid;
     private InteractableObject m_interactableObj;
     [SerializeField] GameObject WeldingPoingIndicatedObjPrefab; // 용접 해야할 장소를 가리키는 오브젝트 프리팹
-    [SerializeField] TextMeshProUGUI InteractText; // 용접 해야할 장소를 가리키는 오브젝트 프리팹
+    [SerializeField] TextMeshProUGUI InteractText;
+    [SerializeField] Slider InteractSlider; // 용접할 때 나오는 인터렉트 오브젝트
     private List<GameObject> WeldingPointIndicatedObjs = new List<GameObject>(); // 용접 해야할 장소를 가리키는 오브젝트
     private Animator m_animator;
     private SpriteRenderer m_spriter;
@@ -37,6 +38,8 @@ public class PlayerController : MonoBehaviour
         m_interactableObj = null;
         WeldingPointIndicatedObjCreate();
         InteractText.gameObject.SetActive(false);
+        
+        InteractSlider.value = 0;
     }
 
     public void SetIsInteractive(bool isInter) // 남발 금지 강제로 바꾸기에 위험
@@ -220,5 +223,19 @@ public class PlayerController : MonoBehaviour
     public void StunAnimation(bool isStun)
     {
         m_animator.SetBool("isStunned", isStun);
+    }
+
+    public void SetSliderToWeldingPointInteract(float min = 0, float max = 1)
+    {
+        if (!InteractSlider.gameObject.activeSelf)
+        {
+            InteractSlider.gameObject.active = true;
+        }
+        InteractSlider.value = (float)min / (float)max;
+    }
+
+    public void HideInteractSlider()
+    {
+        InteractSlider.gameObject.SetActive(false);
     }
 }

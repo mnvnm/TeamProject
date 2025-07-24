@@ -35,12 +35,18 @@ public class WeldingPoint : InteractableObject
     public override void Interactive()
     {
         base.Interactive();
-        if (isInteractContinue) interactiveCurTime += Time.deltaTime;
+        if (isInteractContinue)
+        {
+            interactiveCurTime += Time.deltaTime;
+            GameManager.Inst.game.player.SetSliderToWeldingPointInteract(interactiveCurTime, INTERACTIVE_SECOND);
+        }
         else interactiveCurTime = 0;
+
 
         if (interactiveCurTime >= INTERACTIVE_SECOND && isInteractContinue)
         {
             StopCoroutine(Active());
+            GameManager.Inst.game.player.HideInteractSlider();
             activeSelf = true;
             isInteractContinue = false;
             StartCoroutine(Active());
