@@ -77,6 +77,8 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
 
     void Update()
     {
+        if (GameManager.Inst.IsGameOver) return;
+        Cheat();
         SetNeedWelding();
     }
 
@@ -92,6 +94,17 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
                     break;
                 }
                 IsNeedWelding = false;
+            }
+        }
+    }
+
+    void Cheat()
+    {
+        if (Input.GetKey(KeyCode.Minus))
+        {
+            if (LifeSupportGauge > 0)
+            {
+                LifeSupportGauge -= Time.deltaTime * 50f;
             }
         }
     }

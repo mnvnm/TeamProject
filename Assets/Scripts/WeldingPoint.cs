@@ -8,14 +8,19 @@ public class WeldingPoint : InteractableObject
     const float INTERACTIVE_SECOND = 3f;
     float interactiveCurTime = 0;
 
-    public bool activeSelf = false; // 평상시에는 비활성화 되어있다가 랜덤한 시간에 활성화를 위한 논리변수
+    public bool activeSelf = true; // 평상시에는 비활성화 되어있다가 랜덤한 시간에 활성화를 위한 논리변수
     void Start()
     {
-        
+
     }
 
     void Update()
     {
+        if (GameManager.Inst.IsGameOver)
+        {
+            StopCoroutine(Active());
+            return;
+        }
         Interactive();
     }
     public override void Init()
@@ -49,11 +54,12 @@ public class WeldingPoint : InteractableObject
         float randomTime = 30f;
         if (activeSelf)
         {
-            randomTime = Random.Range(30f, 500f);
+            randomTime = Random.Range(30f, 600f);
+            Debug.Log(randomTime + "초 후에 용접 생성");
             yield return new WaitForSeconds(randomTime);
         }
         activeSelf = false;
-        GameManager.Inst.CameraShake();
+        GameManager.Inst.CameraShakeWelding();
         yield return null;
     }
 }

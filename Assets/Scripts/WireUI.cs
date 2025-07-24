@@ -18,7 +18,7 @@ public class WireUI : MonoBehaviour
     [HideInInspector] public List<int> successNums = new List<int>(); // 각 와이어가 연결되었는지 확인하는 변수
     //기본적으로 왼쪽을 기준으로 하여 왼쪽과 오른쪽이 이어졌을때 해당 왼쪽 버튼의 인덱스를 1로 하여 완료 되었음을 저장  
     int curPickWireNum = 0; // 선택한 와이어 번호
-    int curBtnIndex = 0; // 선택한 버튼 인덱스
+    int curBtnIndex = 10; // 선택한 버튼 인덱스
 
     [SerializeField] GameObject panelObj;
 
@@ -28,6 +28,7 @@ public class WireUI : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Inst.IsGameOver) return;
         if (!GetIsShow()) return;
         // 마우스 포인터를 따라오는 라인 렌더러
         for (int i = 0; i < wireLineRenderer.Count; i++)
@@ -49,6 +50,7 @@ public class WireUI : MonoBehaviour
 
     public void Init() // 모든 Wire 관련 UI 초기화
     {
+        curBtnIndex = 10;
         if (curWireNum == MissionManager.Inst.WireingIndex) return;
         curWireNum = MissionManager.Inst.WireingIndex;
 
@@ -152,9 +154,10 @@ public class WireUI : MonoBehaviour
         if (curBtnIndex != 10 && curBtnIndex != index) // 만약 선택한 와이어가 있는데 다른 와이어를 클릭시
         {
             wireLineRenderer[curBtnIndex].enabled = false; // 기존 선택했던 와이어 라인렌더러를 비활성화
+            GameManager.Inst.CameraShakeWire();
         }
-        wireLineRenderer[index].enabled = true; // 현재 새로 선택한 와이어 라인렌더러 활성화
         curBtnIndex = index;
+        wireLineRenderer[index].enabled = true; // 현재 새로 선택한 와이어 라인렌더러 활성화
     }
 
     public void OnClickMatchWire(int index)
@@ -170,6 +173,7 @@ public class WireUI : MonoBehaviour
         }
         else
         {
+            GameManager.Inst.CameraShakeWire();
             wireLineRenderer[curBtnIndex].enabled = false;
             curPickWireNum = 0;
             curBtnIndex = 10;

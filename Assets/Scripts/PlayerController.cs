@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Inst.IsGameOver) return;
         Move();
         if (Input.GetButtonDown("Horizontal"))
         {
@@ -110,6 +111,8 @@ public class PlayerController : MonoBehaviour
             m_rigid.linearVelocity = new Vector2(0, 0);
             m_interactableObj.isInteractContinue = true;
             m_interactableObj.Interactive();
+            StopCoroutine(InteractTextEffect());
+            InteractText.gameObject.SetActive(false);
             isInteractive = true;
         }
         if (m_interactableObj != null && Input.GetKeyUp(KeyCode.F))
@@ -138,11 +141,12 @@ public class PlayerController : MonoBehaviour
         {
             for (int i = 0; i < WeldingPointIndicatedObjs.Count; i++)
             {
-                WeldingPointIndicatedObjs[i].SetActive(!MissionManager.Inst.weldingPoints[i].activeSelf);
+                float distance = Vector3.Distance(MissionManager.Inst.weldingPoints[i].transform.position, WeldingPointIndicatedObjs[i].transform.position);
+                WeldingPointIndicatedObjs[i].SetActive(!MissionManager.Inst.weldingPoints[i].activeSelf && distance > 5f);
                 if (MissionManager.Inst.weldingPoints[i].activeSelf) continue;
                 Vector3 direction = MissionManager.Inst.weldingPoints[i].transform.position - WeldingPointIndicatedObjs[i].transform.position;
                 WeldingPointIndicatedObjs[i].transform.up = direction;
-                WeldingPointIndicatedObjs[i].transform.localPosition = WeldingPointIndicatedObjs[i].transform.up * 1f;
+                WeldingPointIndicatedObjs[i].transform.localPosition = WeldingPointIndicatedObjs[i].transform.up * 2f;
             }
         }
     }
@@ -185,15 +189,19 @@ public class PlayerController : MonoBehaviour
     {
         float alpha = 0;
         int reserve = 1; // reserve가 2 나머지 값이 0이면 반대로 2를 넘어서면 -2를 하여 다시 1로 만들어 reserve가 다시 반대로
-        while (MissionManager.Inst.IsInteractable)
+        if (m_interactableObj != null)
         {
-            if (alpha >= 0.99f || alpha <= 0.01f) reserve++;
+            bool isInteract = m_interactableObj.isInteractContinue;
+            while (MissionManager.Inst.IsInteractable)
+            {
+                if (alpha >= 0.99f || alpha <= 0.01f) reserve++;
 
-            alpha = Mathf.Lerp(alpha, reserve % 2 == 0 ? 0 : 1, Time.deltaTime * 2);
-            if (reserve > 2) reserve -= 2;
-            Debug.Log(alpha);
-            InteractText.color = new Color(InteractText.color.r, InteractText.color.g, InteractText.color.b, alpha);
-            yield return null;
+                alpha = Mathf.Lerp(alpha, reserve % 2 == 0 ? 0 : 1, Time.deltaTime * 2);
+                if (reserve > 2) reserve -= 2;
+                Debug.Log(alpha);
+                InteractText.color = new Color(InteractText.color.r, InteractText.color.g, InteractText.color.b, alpha);
+                yield return null;
+            }
         }
         yield return null;
     }
@@ -207,5 +215,10 @@ public class PlayerController : MonoBehaviour
 
         bool walking = Mathf.Abs(m_rigid.linearVelocity.x) > 0.05f && isGround;
         m_animator.SetBool("isWalking", walking);
+    }
+
+    public void StunAnimation(bool isStun)
+    {
+        m_animator.SetBool("isStunned", isStun);
     }
 }

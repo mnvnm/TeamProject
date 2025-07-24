@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,6 @@ public class Nonsense : InteractableObject
     public List<string> nonsenseAnswer = new List<string>();
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -47,8 +47,8 @@ public class Nonsense : InteractableObject
         IsSuccess = true;
         isInteractContinue = false;
         SuccessObj.SetActive(false);
+        StartCoroutine(GameManager.Inst.hud.timerUI.ShowExitAfterDelay());
     }
-
     public void ShowInteractableObj()
     {
         SuccessObj.SetActive(true);
