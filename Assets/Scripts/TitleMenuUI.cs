@@ -18,7 +18,7 @@ public class TitleMenuUI : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !MissionManager.Inst.nonsense.isInteractContinue)
         {
             isPanelVisible = !isPanelVisible;
 

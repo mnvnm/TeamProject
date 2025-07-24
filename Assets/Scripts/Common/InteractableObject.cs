@@ -1,5 +1,4 @@
 using UnityEngine;
-using Mono;
 
 public class InteractableObject : MonoBehaviour, IInteractable
 {

@@ -100,11 +100,32 @@ public class MissionManager : MonoBehaviour // 미션 관련 스크립트
 
     void Cheat()
     {
-        if (Input.GetKey(KeyCode.Minus))
+        if (Input.GetKey(KeyCode.Alpha0))
         {
             if (LifeSupportGauge > 0)
             {
                 LifeSupportGauge -= Time.deltaTime * 50f;
+            }
+        }
+        if (Input.GetKey(KeyCode.Alpha9))
+        {
+            if (LifeSupportGauge < 100)
+            {
+                LifeSupportGauge += Time.deltaTime * 50f;
+            }
+        }
+        if (Input.GetKey(KeyCode.Minus))
+        {
+            if (GeneratorGauge > 0)
+            {
+                GeneratorGauge -= Time.deltaTime * 50f;
+            }
+        }
+        if (Input.GetKey(KeyCode.Equals))
+        {
+            if (GeneratorGauge < 100)
+            {
+                GeneratorGauge += Time.deltaTime * 50f;
             }
         }
     }

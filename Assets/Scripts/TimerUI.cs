@@ -33,7 +33,7 @@ public class TimerUI : MonoBehaviour
         {
             // 소수점 필요 없으면 CeilToInt, 필요하면 ToString("F1") 등
             if (exitTimerText)
-                exitTimerText.text = $"RESCUE SHIP ARRIVES : {Mathf.CeilToInt(remain)}";
+                exitTimerText.text = $"[ RESCUE SHIP ARRIVES : {Mathf.CeilToInt(remain) } ]";
 
             yield return null;               // 매 프레임 갱신
             remain -= Time.deltaTime;

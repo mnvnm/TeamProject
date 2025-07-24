@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
 
     bool isInteractive = false;
 
+    public bool IsStun = false;
+
     void Start()
     {
         m_rigid = GetComponent<Rigidbody2D>();
@@ -222,6 +224,7 @@ public class PlayerController : MonoBehaviour
 
     public void StunAnimation(bool isStun)
     {
+        IsStun = isStun;
         m_animator.SetBool("isStunned", isStun);
     }
 
