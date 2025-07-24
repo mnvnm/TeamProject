@@ -9,6 +9,7 @@ public class HudUI : MonoBehaviour
     public MissionUI missionUI;
     public TimerUI timerUI;
     public GameOverUI gameOverUI;
+    public TitleMenuUI titlemenuUI;
     void Start()
     {
 
@@ -28,5 +29,6 @@ public class HudUI : MonoBehaviour
         missionUI.Init();
         timerUI.Init();
         gameOverUI.Init();
+        titlemenuUI.Init();
     }
 }

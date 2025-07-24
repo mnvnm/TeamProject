@@ -22,7 +22,7 @@ public class GameOverUI : MonoBehaviour
     }
     void Update()
     {
-        if (!panelObj.activeSelf) return;
+        if (!panelObj.activeSelf || !GameManager.Inst.IsGameOver) return;
         playerDeadObj.transform.Rotate(new Vector3(0f, 0f, 0.4f));
         playerDeadObj.transform.localPosition = new Vector3(playerDeadObj.transform.localPosition.x + (60 * Time.deltaTime), 0, 0);
     }
