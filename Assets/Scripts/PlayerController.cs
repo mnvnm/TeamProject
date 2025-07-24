@@ -138,11 +138,12 @@ public class PlayerController : MonoBehaviour
         {
             for (int i = 0; i < WeldingPointIndicatedObjs.Count; i++)
             {
-                WeldingPointIndicatedObjs[i].SetActive(!MissionManager.Inst.weldingPoints[i].activeSelf);
+                float distance = Vector3.Distance(MissionManager.Inst.weldingPoints[i].transform.position, WeldingPointIndicatedObjs[i].transform.position);
+                WeldingPointIndicatedObjs[i].SetActive(!MissionManager.Inst.weldingPoints[i].activeSelf && distance > 5f);
                 if (MissionManager.Inst.weldingPoints[i].activeSelf) continue;
                 Vector3 direction = MissionManager.Inst.weldingPoints[i].transform.position - WeldingPointIndicatedObjs[i].transform.position;
                 WeldingPointIndicatedObjs[i].transform.up = direction;
-                WeldingPointIndicatedObjs[i].transform.localPosition = WeldingPointIndicatedObjs[i].transform.up * 1f;
+                WeldingPointIndicatedObjs[i].transform.localPosition = WeldingPointIndicatedObjs[i].transform.up * 1.2f;
             }
         }
     }
