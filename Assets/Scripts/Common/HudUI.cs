@@ -8,6 +8,7 @@ public class HudUI : MonoBehaviour
     public PlayerUI playerUI;
     public MissionUI missionUI;
     public TimerUI timerUI;
+    public GameOverUI gameOverUI;
     void Start()
     {
 
@@ -26,5 +27,6 @@ public class HudUI : MonoBehaviour
         nonsenseUI.Init();
         missionUI.Init();
         timerUI.Init();
+        gameOverUI.Init();
     }
 }
