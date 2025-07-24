@@ -39,6 +39,7 @@ public class LifeSupportMachine : InteractableObject
     {
         if (MissionManager.Inst.LifeSupportGauge <= 0f)
         {
+            GameManager.Inst.hud.gameOverUI.Show();
             GameManager.Inst.IsGameOver = true;
             return;
         }

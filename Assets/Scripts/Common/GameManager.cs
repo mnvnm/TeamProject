@@ -1,5 +1,6 @@
 using SmoothShakeFree;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,7 +34,8 @@ public class GameManager : MonoBehaviour
     }
     public void RestartGame()
     {
-
+        Init();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void Init() // 게임 전체 초기화 함수
