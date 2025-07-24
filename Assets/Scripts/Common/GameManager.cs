@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
     public HudUI hud;
 
     public Camera mainCamera;
+    [SerializeField] SmoothShakeFreePreset WeldingShakePreset;
+    [SerializeField] SmoothShakeFreePreset WireShakePreset;
+
+    public bool IsGameOver = false;
     void Start()
     {
         Init();
@@ -34,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     private void Init() // 게임 전체 초기화 함수
     {
+        IsGameOver = false;
         game.Init();
         hud.Init();
     }
@@ -43,9 +48,15 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void CameraShake()
+    public void CameraShakeWelding()
     {
         var shake = mainCamera.GetComponent<SmoothShake>();
-        if(shake != null) shake.StartShake();
+        if (shake != null) shake.StartShake(WeldingShakePreset);
+    }
+
+    public void CameraShakeWire()
+    {
+        var shake = hud.wireUI.GetComponent<SmoothShake>();
+        if (shake != null) shake.StartShake(WireShakePreset);
     }
 }

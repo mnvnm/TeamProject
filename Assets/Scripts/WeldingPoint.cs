@@ -16,6 +16,11 @@ public class WeldingPoint : InteractableObject
 
     void Update()
     {
+        if (GameManager.Inst.IsGameOver)
+        {
+            StopCoroutine(Active());
+            return;
+        }
         Interactive();
     }
     public override void Init()
@@ -54,7 +59,7 @@ public class WeldingPoint : InteractableObject
             yield return new WaitForSeconds(randomTime);
         }
         activeSelf = false;
-        GameManager.Inst.CameraShake();
+        GameManager.Inst.CameraShakeWelding();
         yield return null;
     }
 }

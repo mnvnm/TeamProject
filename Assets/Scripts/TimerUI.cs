@@ -9,7 +9,6 @@ public class TimerUI : MonoBehaviour
     [SerializeField] GameObject doorObj;   // 출구문 오브젝트
     [SerializeField] float exitDelay = 60f; // 지연 시간(초)
     [SerializeField] TMPro.TextMeshProUGUI exitTimerText; // 남은 시간 표시용
-    private BoxCollider2D doorCol2D;
 
     void Start()
     {
@@ -19,9 +18,6 @@ public class TimerUI : MonoBehaviour
     {
         if (exitObj != null)
             exitObj.SetActive(false);
-
-        if (exitObj != null)
-            doorCol2D = doorObj.GetComponent<BoxCollider2D>();
 
         if (exitTimerText != null)
             exitTimerText.gameObject.SetActive(false);
@@ -47,8 +43,8 @@ public class TimerUI : MonoBehaviour
 
         if (exitObj != null)
             exitObj.SetActive(true);
-        if (doorCol2D != null)
-            doorCol2D.enabled = false;
+        if (doorObj != null)
+            doorObj.SetActive(false);
     }
 
 }

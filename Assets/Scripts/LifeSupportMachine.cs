@@ -15,6 +15,7 @@ public class LifeSupportMachine : InteractableObject
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Inst.IsGameOver) return;
         DecreaseLifeSupportGauge();
     }
 
@@ -36,7 +37,11 @@ public class LifeSupportMachine : InteractableObject
 
     void DecreaseLifeSupportGauge()
     {
-        if (MissionManager.Inst.LifeSupportGauge <= 0f) return;
+        if (MissionManager.Inst.LifeSupportGauge <= 0f)
+        {
+            GameManager.Inst.IsGameOver = true;
+            return;
+        }
         MissionManager.Inst.LifeSupportGauge -= DECREASE_LIFE_SUPPORT_GAUGE * Time.deltaTime * (MissionManager.Inst.IsNeedWelding ? 2 : 1) * (MissionManager.Inst.GeneratorGauge <= 0 ? 2f : 1);
     }
 }
