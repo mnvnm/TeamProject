@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] TextMeshProUGUI InteractText;
     [SerializeField] Slider InteractSlider; // 용접할 때 나오는 인터렉트 오브젝트
     private List<GameObject> WeldingPointIndicatedObjs = new List<GameObject>(); // 용접 해야할 장소를 가리키는 오브젝트
+    private AudioSource m_audioSource;
     private Animator m_animator;
     private SpriteRenderer m_spriter;
 
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        m_audioSource = GetComponent<AudioSource>();
         m_rigid = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         m_spriter = GetComponent<SpriteRenderer>();
@@ -225,6 +227,7 @@ public class PlayerController : MonoBehaviour
 
     public void StunAnimation(bool isStun)
     {
+        if (isStun) m_audioSource.Play();
         IsStun = isStun;
         m_animator.SetBool("isStunned", isStun);
     }

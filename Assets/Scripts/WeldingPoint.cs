@@ -8,10 +8,13 @@ public class WeldingPoint : InteractableObject
     const float INTERACTIVE_SECOND = 3f;
     float interactiveCurTime = 0;
 
+    AudioSource Audio;
+   [SerializeField] AudioClip boomClip;
+
     public bool activeSelf = true; // 평상시에는 비활성화 되어있다가 랜덤한 시간에 활성화를 위한 논리변수
     void Start()
     {
-
+        Audio = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -64,6 +67,7 @@ public class WeldingPoint : InteractableObject
             Debug.Log(randomTime + "초 후에 용접 생성");
             yield return new WaitForSeconds(randomTime);
         }
+        if (Audio != null) Audio.PlayOneShot(boomClip);
         activeSelf = false;
         GameManager.Inst.CameraShakeWelding();
         yield return null;
