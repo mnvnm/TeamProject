@@ -233,6 +233,7 @@ MonoBehaviour:
   SuccessObj: {fileID: 7725393525308959974}
   NeedWeldingObj: {fileID: 8573484957701521341}
   boomClip: {fileID: 8300000, guid: 61df9bb7d9747d842ac38262e271c492, type: 3}
+  fixClip: {fileID: 8300000, guid: 605455bffc4988c4598310a5774f26a9, type: 3}
   activeSelf: 0
 --- !u!82 &-7410351669890826310
 AudioSource:

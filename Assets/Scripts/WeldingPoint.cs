@@ -10,6 +10,7 @@ public class WeldingPoint : InteractableObject
 
     AudioSource Audio;
    [SerializeField] AudioClip boomClip;
+   [SerializeField] AudioClip fixClip;
 
     public bool activeSelf = true; // 평상시에는 비활성화 되어있다가 랜덤한 시간에 활성화를 위한 논리변수
     void Start()
@@ -49,6 +50,7 @@ public class WeldingPoint : InteractableObject
         if (interactiveCurTime >= INTERACTIVE_SECOND && isInteractContinue)
         {
             StopCoroutine(Active());
+        if (Audio != null) Audio.PlayOneShot(fixClip);
             GameManager.Inst.game.player.HideInteractSlider();
             activeSelf = true;
             isInteractContinue = false;
